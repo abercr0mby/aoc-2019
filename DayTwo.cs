@@ -33,7 +33,6 @@ class DayTwo {
             break;
         default:
             throw new System.Exception("unknown opcode");
-            break;
     }
 
     opCodes = Compute(opCodes, nextOpCode);
