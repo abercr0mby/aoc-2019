@@ -2,7 +2,7 @@
 
 namespace aoc_2019
 {
-    class Program
+    class MainClass
     {
         static void Main(string[] args)
         {
