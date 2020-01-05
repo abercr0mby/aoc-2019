@@ -12,7 +12,6 @@ class DayTwo {
 
     if(opCodes[currentPosition] == 99)
     {
-      Console.WriteLine("terminate");
       return opCodes;
     }
 
@@ -41,6 +40,22 @@ class DayTwo {
 
   public int RunTestsAndGetResultPartOne () {
     RunTestsPartOne();
+    int[] workingCopy = (int[]) mainInput.Clone();
+    return Compute(workingCopy,0)[0];
+  }
+
+  public int GetResultPartTwo () {
+    for ( var i = 0; i < 100; i++ ) {
+      for ( var j = 0; j < 100; j++ ) {
+        int[] workingCopy = (int[]) mainInput.Clone();
+        workingCopy[1] = i;
+        workingCopy[2] = j;
+        workingCopy = Compute(workingCopy,0);
+        if(workingCopy[0] == 19690720) {
+          return ( workingCopy[1] * 100 ) + workingCopy[2];
+        }
+      }
+    }
     return Compute(mainInput,0)[0];    
   }
 

@@ -18,7 +18,8 @@ namespace aoc_2019
 
     try{
       var dayTwo = new DayTwo();
-      Console.WriteLine(dayTwo.RunTestsAndGetResultPartOne());      
+      Console.WriteLine(dayTwo.RunTestsAndGetResultPartOne());
+      Console.WriteLine(dayTwo.GetResultPartTwo());
     }
     catch(Exception ex){
       Console.WriteLine(ex.Message);
