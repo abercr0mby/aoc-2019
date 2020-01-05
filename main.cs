@@ -2,10 +2,10 @@
 
 namespace aoc_2019
 {
-    class MainClass
+  class MainClass
+  {
+    static void Main(string[] args)
     {
-        static void Main(string[] args)
-        {
   /*  try{
       var dayOne = new DayOne();
       Console.WriteLine(dayOne.RunTestsAndGetResultPartOne());
@@ -16,14 +16,24 @@ namespace aoc_2019
     } 
   */
 
-    try{
-      var dayTwo = new DayTwo();
-      Console.WriteLine(dayTwo.RunTestsAndGetResultPartOne());
-      Console.WriteLine(dayTwo.GetResultPartTwo());
+/*       try{
+        var dayTwo = new DayTwo();
+        Console.WriteLine(dayTwo.RunTestsAndGetResultPartOne());
+        Console.WriteLine(dayTwo.GetResultPartTwo());
+      }
+      catch(Exception ex){
+        Console.WriteLine(ex.Message);
+      } */
+
+      try{
+        var dayThree = new DayThree();
+        Console.WriteLine(dayThree.RunTestsAndGetResultPartOne());
+      }
+      catch(Exception ex){
+        Console.WriteLine(ex.Message);
+      }
     }
-    catch(Exception ex){
-      Console.WriteLine(ex.Message);
-    }
-        }
-    }
+  }
 }
+
+
