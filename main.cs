@@ -45,7 +45,7 @@ namespace aoc_2019
       }
       catch(Exception ex){
         Console.WriteLine(ex.Message);
-      }      
+      } 
     }
   }
 }
