@@ -27,7 +27,10 @@ namespace aoc_2019
 
       try{
         var dayThree = new DayThree();
+        var watch = System.Diagnostics.Stopwatch.StartNew();
         Console.WriteLine(dayThree.RunTestsAndGetResultPartOne());
+        watch.Stop();
+        Console.WriteLine("Time:" + watch.ElapsedMilliseconds);
       }
       catch(Exception ex){
         Console.WriteLine(ex.Message);

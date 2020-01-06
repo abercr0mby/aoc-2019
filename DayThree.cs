@@ -21,18 +21,14 @@ class FMSystem {
 
   public Point GetCrossOvers()
   {
-    var sortedOne = wireOne.path.OrderBy(p=>p.distance).Where(p=>p.distance > 0).ToList();
-    var sortedTwo = wireTwo.path.OrderBy(p=>p.distance).Where(p=>p.distance > 0).ToList();
+    var sortedOne = wireOne.path.OrderBy(p=>p.Value.distance).Where(p=>p.Value.distance > 0);
 
     var crossOvers = new List<Point>();
     foreach(var wireOnePoint in sortedOne)
     {
-      foreach(var wireTwoPoint in sortedTwo)
+      if(wireTwo.path.ContainsKey(wireOnePoint.Key))
       {
-        if(wireOnePoint.x == wireTwoPoint.x && wireOnePoint.y == wireTwoPoint.y)
-        {
-          return wireOnePoint;
-        }
+        return wireOnePoint.Value;
       }
     }
     return null;
@@ -47,7 +43,7 @@ class Wire {
 
   private Point currentPoint;
 
-  public List<Point> path = new List<Point>();
+  public Dictionary<string, Point> path = new Dictionary<string, Point>();
 
   public Wire( string [] directions ) {
     this.directions = directions;
@@ -90,7 +86,7 @@ class Wire {
         default:
           throw new System.Exception("Unknown direction");
       }
-      path.Add( new Point( nextPoint.x, nextPoint.y ) );
+      path.TryAdd( nextPoint.x + "-" + nextPoint.y, new Point( nextPoint.x, nextPoint.y ) );
     }
     currentPoint = nextPoint;
     currentStep ++;
