@@ -24,7 +24,7 @@ namespace aoc_2019
       catch(Exception ex){
         Console.WriteLine(ex.Message);
       } */
-
+/*
       try{
         var dayThree = new DayThree();
         var watch = System.Diagnostics.Stopwatch.StartNew();
@@ -45,7 +45,29 @@ namespace aoc_2019
       }
       catch(Exception ex){
         Console.WriteLine(ex.Message);
-      } 
+      }
+      */ 
+      try{
+        var dayFour = new DayFour();
+        var watch = System.Diagnostics.Stopwatch.StartNew();
+        Console.WriteLine(dayFour.RunTestsAndGetResultPartOne());
+        watch.Stop();
+        Console.WriteLine("Time:" + watch.ElapsedMilliseconds);
+      }
+      catch(Exception ex){
+        Console.WriteLine(ex.Message);
+      }   
+
+      try{
+        var dayFour = new DayFour();
+        var watch = System.Diagnostics.Stopwatch.StartNew();
+        Console.WriteLine(dayFour.RunTestsAndGetResultPartTwo());
+        watch.Stop();
+        Console.WriteLine("Time:" + watch.ElapsedMilliseconds);
+      }
+      catch(Exception ex){
+        Console.WriteLine(ex.Message);
+      }          
     }
   }
 }
