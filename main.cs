@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace aoc_2019
 {
@@ -15,16 +15,18 @@ namespace aoc_2019
       Console.WriteLine(ex.Message);
     } 
   */
-
-/*       try{
+      
+      try{
         var dayTwo = new DayTwo();
         Console.WriteLine(dayTwo.RunTestsAndGetResultPartOne());
         Console.WriteLine(dayTwo.GetResultPartTwo());
       }
       catch(Exception ex){
         Console.WriteLine(ex.Message);
-      } */
-/*
+      }
+      
+
+      /*
       try{
         var dayThree = new DayThree();
         var watch = System.Diagnostics.Stopwatch.StartNew();
@@ -46,7 +48,9 @@ namespace aoc_2019
       catch(Exception ex){
         Console.WriteLine(ex.Message);
       }
-      */ 
+      */
+      
+      /* 
       try{
         var dayFour = new DayFour();
         var watch = System.Diagnostics.Stopwatch.StartNew();
@@ -56,18 +60,30 @@ namespace aoc_2019
       }
       catch(Exception ex){
         Console.WriteLine(ex.Message);
-      }   
+      } 
+      */  
 
       try{
-        var dayFour = new DayFour();
+        var dayFive = new DayFive();
         var watch = System.Diagnostics.Stopwatch.StartNew();
-        Console.WriteLine(dayFour.RunTestsAndGetResultPartTwo());
+        dayFive.RunTestsAndShowResultPartOne();
         watch.Stop();
         Console.WriteLine("Time:" + watch.ElapsedMilliseconds);
       }
       catch(Exception ex){
         Console.WriteLine(ex.Message);
-      }          
+      }
+
+      try{
+        var dayFive = new DayFive();
+        var watch = System.Diagnostics.Stopwatch.StartNew();
+        dayFive.RunTestsAndShowResultPartTwo();
+        watch.Stop();
+        Console.WriteLine("Time:" + watch.ElapsedMilliseconds);
+      }
+      catch(Exception ex){
+        Console.WriteLine(ex.Message);
+      }
     }
   }
 }
