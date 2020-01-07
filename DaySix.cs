@@ -5,14 +5,16 @@ class DaySix
   public int RunTestsAndGetResultPartOne() 
   {
     RunTestsPartOne();
-    return 0;
+    var map = new OrbitalMap("OrbitalData.txt");
+    return map.totalOrbits;
   }
 
   public void RunTestsPartOne () 
   {
-    if(true) 
+    var map = new OrbitalMap("OrbitalDataTestOne.txt");
+    if(map.totalOrbits != 42) 
     {
-      throw new System.Exception();
+      throw new System.Exception(map.totalOrbits + " should  be 42");
     }
   }  
 }
