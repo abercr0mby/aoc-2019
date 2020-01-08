@@ -6,7 +6,7 @@ class DayTwo {
 
   public int RunTestsAndGetResultPartOne () {
     RunTestsPartOne();
-    var computer = new IntCodeComputer((int[]) mainInput.Clone());
+    var computer = new IntCodeComputer((int[]) mainInput.Clone(), null);
     return computer.Compute()[0];
   }
 
@@ -16,7 +16,7 @@ class DayTwo {
         int[] workingCopy = (int[]) mainInput.Clone();
         workingCopy[1] = i;
         workingCopy[2] = j;
-        var computer = new IntCodeComputer(workingCopy);
+        var computer = new IntCodeComputer(workingCopy, null);
         workingCopy = computer.Compute();
         if(workingCopy[0] == 19690720) {
           return ( workingCopy[1] * 100 ) + workingCopy[2];
@@ -27,35 +27,35 @@ class DayTwo {
   }
 
   public void RunTestsPartOne () {
-    var computer = new IntCodeComputer(new int[] {1,9,10,3,2,3,11,0,99,30,40,50});
+    var computer = new IntCodeComputer(new int[] {1,9,10,3,2,3,11,0,99,30,40,50}, null);
     var testOneOutput = computer.Compute();
     if(testOneOutput[0] != 3500) {
       Console.WriteLine(testOneOutput[0]);
       throw new System.Exception();
     }
 
-    computer = new IntCodeComputer(new int[] {1,0,0,0,99});
+    computer = new IntCodeComputer(new int[] {1,0,0,0,99}, null);
     var testTwoOutput = computer.Compute();
     if(testTwoOutput[0] != 2) {
       Console.WriteLine(testTwoOutput[0]);
       throw new System.Exception();
     } 
 
-    computer = new IntCodeComputer(new int[] {2,3,0,3,99});
+    computer = new IntCodeComputer(new int[] {2,3,0,3,99}, null);
     var testThreeOutput = computer.Compute();
     if(testThreeOutput[3] != 6) {
       Console.WriteLine(testThreeOutput[3]);
       throw new System.Exception();
     }    
 
-    computer = new IntCodeComputer(new int[] {2,4,4,5,99,0});
+    computer = new IntCodeComputer(new int[] {2,4,4,5,99,0}, null);
     var testFourOutput = computer.Compute();
     if(testFourOutput[5] != 9801) {
       Console.WriteLine(testFourOutput[5]);
       throw new System.Exception();
     }
 
-    computer = new IntCodeComputer( new int[] {1,1,1,4,99,5,6,0,99} );
+    computer = new IntCodeComputer( new int[] {1,1,1,4,99,5,6,0,99},null);
     var testFiveOutput = computer.Compute();
     if(testFiveOutput[0] != 30 && testFiveOutput[4] != 2) {
       Console.WriteLine(testFiveOutput[0]);

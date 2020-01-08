@@ -85,6 +85,7 @@ namespace aoc_2019
         Console.WriteLine(ex.Message);
       } */
 
+      /*
       try{
         var daySix = new DaySix();
         var watch = System.Diagnostics.Stopwatch.StartNew();
@@ -100,6 +101,18 @@ namespace aoc_2019
         var daySix = new DaySix();
         var watch = System.Diagnostics.Stopwatch.StartNew();
         Console.WriteLine(daySix.RunTestsAndGetResultPartTwo());
+        watch.Stop();
+        Console.WriteLine("Time:" + watch.ElapsedMilliseconds);
+      }
+      catch(Exception ex){
+        Console.WriteLine(ex.Message);
+      }
+      */
+
+      try{
+        var daySeven = new DaySeven();
+        var watch = System.Diagnostics.Stopwatch.StartNew();
+        Console.WriteLine(daySeven.RunTestsAndGetResultPartOne());
         watch.Stop();
         Console.WriteLine("Time:" + watch.ElapsedMilliseconds);
       }

@@ -2,14 +2,20 @@ using System;
 
 class IntCodeComputer
 {
-  private int[] Program;
-  private int CurrentPosition;
-  private string NextOpCode;  
+  private int[] Program { get; set; }
+  private int CurrentPosition { get; set; }
+  private string NextOpCode { get; set; }  
 
-  public IntCodeComputer(int[] Program)
+  private int[] Inputs { get; set; }
+  private int CurrentInput { get; set; }
+  public int Output { get; set; }
+
+  public IntCodeComputer(int[] Program, int[] inputs)
   {
     CurrentPosition = 0;
     this.Program = Program;
+    this.Inputs = inputs;
+    CurrentInput = 0;
     SetNextOpCode();
   }
 
@@ -59,13 +65,22 @@ class IntCodeComputer
 
   public void ShowOutput(bool[] immediacies)
   {
-    var x = IsParameterImmediate(1, immediacies) ? Program[CurrentPosition + 1] : Program[Program[CurrentPosition + 1]];
-    Console.WriteLine(x);
+    Output = IsParameterImmediate(1, immediacies) ? Program[CurrentPosition + 1] : Program[Program[CurrentPosition + 1]];
+        
+    // Console.WriteLine(x);
     CurrentPosition += 2;
   }
 
   public void GetInput()
   {
+    if (Inputs != null && Inputs.Length >= CurrentInput)
+    {
+      Program[Program[CurrentPosition + 1]] = Inputs[CurrentInput];
+      CurrentInput ++;
+      CurrentPosition += 2; 
+      return;
+    }
+
     string val;
     Console.Write("Enter integer: ");
     val = Console.ReadLine();  
@@ -134,7 +149,6 @@ class IntCodeComputer
           Add(parametersImmediacy);
           break;
 
-        // multiply
         case "02":
           Multiply(parametersImmediacy);
           break;
