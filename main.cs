@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace aoc_2019
 {
@@ -89,6 +89,17 @@ namespace aoc_2019
         var daySix = new DaySix();
         var watch = System.Diagnostics.Stopwatch.StartNew();
         Console.WriteLine(daySix.RunTestsAndGetResultPartOne());
+        watch.Stop();
+        Console.WriteLine("Time:" + watch.ElapsedMilliseconds);
+      }
+      catch(Exception ex){
+        Console.WriteLine(ex.Message);
+      }
+
+      try{
+        var daySix = new DaySix();
+        var watch = System.Diagnostics.Stopwatch.StartNew();
+        Console.WriteLine(daySix.RunTestsAndGetResultPartTwo());
         watch.Stop();
         Console.WriteLine("Time:" + watch.ElapsedMilliseconds);
       }

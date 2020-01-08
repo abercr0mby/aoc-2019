@@ -9,6 +9,13 @@ class DaySix
     return map.totalOrbits;
   }
 
+  public int RunTestsAndGetResultPartTwo() 
+  {
+    RunTestsPartTwo();
+    var map = new OrbitalMap("OrbitalData.txt");
+    return map.GetOrbitalTransfersBetween("YOU", "SAN");
+  }
+
   public void RunTestsPartOne () 
   {
     var map = new OrbitalMap("OrbitalDataTestOne.txt");
@@ -16,5 +23,15 @@ class DaySix
     {
       throw new System.Exception(map.totalOrbits + " should  be 42");
     }
-  }  
+  } 
+
+  public void RunTestsPartTwo () 
+  {
+    var map = new OrbitalMap("OrbitalDataTestTwo.txt");
+    var minPath = map.GetOrbitalTransfersBetween("YOU", "SAN");
+    if(minPath != 4) 
+    {
+      throw new System.Exception(minPath + " should  be 4");
+    }
+  }    
 }

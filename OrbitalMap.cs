@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 class OrbitalMap 
 {
@@ -18,7 +19,7 @@ class OrbitalMap
     MapFile = mapFile;
 
     com = new Planet("COM");
-    AllPlanets.Add(com.name, com);
+    AllPlanets.Add(com.Name, com);
     PopulateMapFromFile();
     totalOrbits = com.CalculateDistances( totalOrbits );
   }
@@ -28,7 +29,7 @@ class OrbitalMap
     String line;
     try 
     {
-      //Pass the file path and file name to the StreamReader constructor
+      //Pass the file path and file Name to the StreamReader constructor
       StreamReader sr = new StreamReader(MapFile);   
 
       //Continue to read until you reach end of file
@@ -46,14 +47,14 @@ class OrbitalMap
         if (orbittedPlanet == null)
         {
           orbittedPlanet = new Planet(orbittedName);
-          AllPlanets.Add(orbittedPlanet.name, orbittedPlanet);
+          AllPlanets.Add(orbittedPlanet.Name, orbittedPlanet);
         }
 
         AllPlanets.TryGetValue(orbitingName, out orbitingPlanet);
         if (orbitingPlanet == null)
         {
           orbitingPlanet = new Planet(orbitingName);
-          AllPlanets.Add(orbitingPlanet.name, orbitingPlanet);
+          AllPlanets.Add(orbitingPlanet.Name, orbitingPlanet);
         }
 
         orbittedPlanet.AddOrbitedBy(orbitingPlanet);
@@ -70,13 +71,48 @@ class OrbitalMap
     {
       Console.WriteLine("Executing finally block.");
     }
+  }
+
+  public int GetOrbitalTransfersBetween(string pointOneName, string pointTwoName)
+  {
+    Planet pointOnePlanet;
+    Planet pointTwoPlanet;
+    Planet comPlanet;
+
+    AllPlanets.TryGetValue(pointOneName, out pointOnePlanet);
+    AllPlanets.TryGetValue(pointTwoName, out pointTwoPlanet);
+    AllPlanets.TryGetValue("COM", out comPlanet);
+
+    var pathOne = pointOnePlanet.GetPathTo(comPlanet);
+    var pathTwo = pointTwoPlanet.GetPathTo(comPlanet);
+
+    var crossOverPlanet = GetCrossOverPlanet(pathOne, pathTwo);
+    return (pointOnePlanet.InOrbitAround.totalOrbiting - crossOverPlanet.totalOrbiting)
+      + (pointTwoPlanet.InOrbitAround.totalOrbiting - crossOverPlanet.totalOrbiting);
+  }
+
+  private Planet GetCrossOverPlanet(
+    Dictionary<string, Planet> pathOne,
+    Dictionary<string, Planet> pathTwo)
+  {
+    var crossOvers = new List<Planet>();
+    foreach(var p1 in pathOne)
+    {
+      if(pathTwo.ContainsKey(p1.Key))
+      {
+        crossOvers.Add(p1.Value);
+      }
     }
+
+    crossOvers.OrderBy(p => p.totalOrbiting);
+    return crossOvers.FirstOrDefault();
+  }
 }
 
 
 class Planet
 {
-  public string name { get; set; }
+  public string Name { get; set; }
 
   public List<Planet> OrbitedBy { get; set; }
 
@@ -86,10 +122,27 @@ class Planet
 
   public int totalOrbiting { get; set; } = 0;
 
-  public Planet(string name)
+  public Planet(string Name)
   {
     OrbitedBy = new List<Planet>();
-    this.name = name;
+    this.Name = Name;
+  }
+
+  public Dictionary<string, Planet> GetPathTo(Planet destination)
+  {
+    var path = new Dictionary<string, Planet>();
+    path.Add(this.Name, this);
+    if (this == destination)
+    {
+      return path;
+    }
+  
+    var subPath = InOrbitAround.GetPathTo(destination);
+    foreach(var p in subPath)
+    {
+      path.Add(p.Key, p.Value);
+    }
+    return path;
   }
 
   public int CalculateDistances(int total)
