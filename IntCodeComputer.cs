@@ -4,19 +4,26 @@ class IntCodeComputer
 {
   private int[] Program { get; set; }
   private int CurrentPosition { get; set; }
-  private string NextOpCode { get; set; }  
+  private string NextOpCode { get; set; } 
+  public bool Halted { get; set; }
 
-  private int[] Inputs { get; set; }
+  public int[] Inputs { get; set; }
   private int CurrentInput { get; set; }
   public int Output { get; set; }
 
-  public IntCodeComputer(int[] Program, int[] inputs)
+  public IntCodeComputer(int[] program, int[] inputs)
   {
-    CurrentPosition = 0;
-    this.Program = Program;
+    CurrentPosition = 0;    
+    this.Program = (int[]) program.Clone();
+
     this.Inputs = inputs;
     CurrentInput = 0;
-    SetNextOpCode();
+    Halted = false;
+  }
+
+  public void SetInputSignal(int inputSignal)
+  {
+    Inputs[1] = inputSignal;
   }
 
   public bool [] GetParameterImmediacyFromOpCodeValue(string opCodeValue, string opCode)
@@ -76,7 +83,10 @@ class IntCodeComputer
     if (Inputs != null && Inputs.Length >= CurrentInput)
     {
       Program[Program[CurrentPosition + 1]] = Inputs[CurrentInput];
-      CurrentInput ++;
+      if(Inputs.Length - 1 > CurrentInput)
+      {
+        CurrentInput ++;
+      }
       CurrentPosition += 2; 
       return;
     }
@@ -137,15 +147,25 @@ class IntCodeComputer
 
   public int[] Compute() 
   {
+    // Console.WriteLine(Inputs[0] + " - " + Inputs[1]);
+
     while(NextOpCode != "99")
     {
-      var opCodeValue = Program[CurrentPosition].ToString();
-      bool [] parametersImmediacy = GetParameterImmediacyFromOpCodeValue(opCodeValue, NextOpCode);
+      //Console.Write(" - " + CurrentPosition);      
+      var opCodeValue = Program[CurrentPosition].ToString();            
+
+      //Console.Write(" - " + opCodeValue);
+
+      SetNextOpCode();
+
+      //Console.Write(" - " + NextOpCode);
+      //Console.WriteLine();
+
+      bool [] parametersImmediacy = GetParameterImmediacyFromOpCodeValue(opCodeValue, NextOpCode);      
 
       switch (NextOpCode)
       {
         case "01":
-
           Add(parametersImmediacy);
           break;
 
@@ -155,35 +175,47 @@ class IntCodeComputer
 
         case "03":
           GetInput();
-            break;
+          break;
 
         case "04":
           ShowOutput(parametersImmediacy);
-            break;
+          break;
 
         case "05":
           JumpIfTrue(parametersImmediacy);
-            break;
+          break;
 
         case "06":
           JumpIfFalse(parametersImmediacy);
-            break;
+          break;
 
         case "07":
           LessThan(parametersImmediacy);
-            break;
+          break;
 
         case "08":
           Equals(parametersImmediacy);
-            break;                                    
+          break;                                    
+
+        case "99":
+          break;  
 
         default:
-            throw new System.Exception("unknown opcode");        
-      }
+          throw new System.Exception("unknown opcode - " + NextOpCode);        
+      }      
       
-      SetNextOpCode();
-    }
+      if(NextOpCode == "04")
+      {  
+        break;
+      }
 
+      if(NextOpCode == "99")
+      {
+        Halted = true;
+        break;
+      } 
+    }
+      
     return Program;
   }
 }
