@@ -51,7 +51,6 @@ class AmplificationCircuit
 
       do
       {
-        var somethingHalted = false;
         var restart = 0;
         for(; restart < Computers.Count(); restart ++)
         {          
