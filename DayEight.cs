@@ -25,7 +25,7 @@ class DayEight
 
   public void RunTestsPartOne () 
   {    
-    var image = new Image(3, 3, "123456789012");
+    var image = new Image(3, 2, "123456789012");
     var result = image.GetOneTimesTwoForLowest(0);
     if(result != 1) 
     {
@@ -41,6 +41,7 @@ class DayEight
   {    
     var image = new Image(2, 2, "0222112222120000");
     image.FlattenImage();
+    image.RenderFlattened();
     if( !image.FlattenedLayer.Digits.SequenceEqual(new int[] {0, 1, 1, 0}) )
     {
       throw new System.Exception("Flatttened image is not right");
@@ -88,7 +89,7 @@ class DayEight
         {
           return;
         }
-        Layers.Add( new Layer(digits.Skip(i * (layerSize-1)).Take(layerSize).ToArray()) );
+        Layers.Add( new Layer(digits.Skip((i * layerSize)).Take(layerSize).ToArray()) );
         i++;
       } while(true);        
     }
@@ -97,8 +98,8 @@ class DayEight
     {
         for(var i = 0; i < FlattenedLayer.Digits.Count(); i++)
         {
-            Console.Write(FlattenedLayer.Digits[i] == 2 ? "?" : FlattenedLayer.Digits[i] == 1 ? "\u25A0" : " ");
-            if(i > 0 && i % (x) == 0)
+            Console.Write(FlattenedLayer.Digits[i] == 2 ? "?" : FlattenedLayer.Digits[i] == 1 ? " " : "\u25A0");
+            if(i > 0 && (i+1) % x == 0)
             {
                 Console.Write("\r\n");
             }
