@@ -146,6 +146,17 @@ namespace aoc_2019
         Console.WriteLine(ex.Message);
       }
 
+      try{
+        var dayEight = new DayEight();
+        var watch = System.Diagnostics.Stopwatch.StartNew();
+        Console.WriteLine(dayEight.RunTestsAndGetResultPartTwo());
+        watch.Stop();
+        Console.WriteLine("Time:" + watch.ElapsedMilliseconds);
+      }
+      catch(Exception ex){
+        Console.WriteLine(ex.Message);
+      }
+
     }
   }
 }
