@@ -5,23 +5,23 @@ using System.Linq;
 class AmplificationCircuit
 {
 
-  private int[] Program { get; set; }
-  private int InputSignal { get; set; }
-  private Dictionary<string, int> Outputs { get; set; }
+  private long[] Program { get; set; }
+  private long InputSignal { get; set; }
+  private Dictionary<string, long> Outputs { get; set; }
 
-  public int currentBoosterOutput = 0;
+  public long currentBoosterOutput = 0;
 
   private List<IntCodeComputer> Computers {get; set; }
 
-  public AmplificationCircuit(int[] program)
+  public AmplificationCircuit(long[] program)
   {
     Program = program;
-    Outputs = new Dictionary<string, int>();
+    Outputs = new Dictionary<string, long>();
     Computers = new List<IntCodeComputer>();
   }
 
 
-  public int RunFeedbackCircuitPermutations(int[] phaseSettings)
+  public long RunFeedbackCircuitPermutations(int[] phaseSettings)
   {
     //Get the permutations
     var perms = GetPermutations(phaseSettings, phaseSettings.Length);
@@ -40,13 +40,13 @@ class AmplificationCircuit
     return Outputs.Select(o => o.Value).Max();
   }
 
-  public int RunFeedbackCircuit(int[] phaseSettings)
+  public long RunFeedbackCircuit(int[] phaseSettings)
   {
       Computers = new List<IntCodeComputer>();
 
       foreach(var phaseSetting in phaseSettings)
       {
-        Computers.Add(new IntCodeComputer(Program, new int[] {phaseSetting, 0}));
+        Computers.Add(new IntCodeComputer(Program, new long[] {phaseSetting, 0}, true));
       }      
 
       do
@@ -58,8 +58,7 @@ class AmplificationCircuit
 
           c.SetInputSignal(InputSignal);          
           c.Compute();
-          InputSignal = c.Output;
-          //Console.WriteLine(c.Output);
+          InputSignal = c.Output.Last();
 
           if(restart == Computers.Count() - 1)
           {
@@ -72,11 +71,9 @@ class AmplificationCircuit
           }
         }
       } while(true);
-
-      return currentBoosterOutput;
   }
 
-  public int RunCircuitPermutations(int[] phaseSettings)
+  public long RunCircuitPermutations(int[] phaseSettings)
   {
     //Get the permutations
     var perms = GetPermutations(phaseSettings, phaseSettings.Length);
@@ -87,9 +84,9 @@ class AmplificationCircuit
 
       foreach(var phaseSetting in p)
       {
-        var computer = new IntCodeComputer(Program, new int[] {phaseSetting, InputSignal});
+        var computer = new IntCodeComputer(Program, new long[] {phaseSetting, InputSignal}, false);
         computer.Compute();
-        InputSignal = computer.Output;
+        InputSignal = computer.Output.Last();
         permName += "-" + phaseSetting;
       }
       Outputs.Add(permName, InputSignal);      
